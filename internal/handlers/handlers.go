@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/RazikaBengana/Go-BnB/internal/config"
+	"github.com/RazikaBengana/Go-BnB/internal/forms"
 	"github.com/RazikaBengana/Go-BnB/internal/models"
 	"github.com/RazikaBengana/Go-BnB/internal/render"
 	"log"
@@ -57,7 +58,14 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 
 // Reservation renders the make a reservation page and displays form
 func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{
+		Form: forms.New(nil),
+	})
+}
+
+// PostReservation handles the posting of a reservation form
+func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
+
 }
 
 // Availability renders the search availability page
