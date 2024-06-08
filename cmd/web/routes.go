@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/RazikaBengana/Go-BnB/pkg/config"
-	"github.com/RazikaBengana/Go-BnB/pkg/handlers"
+	"github.com/RazikaBengana/Go-BnB/internal/config"
+	"github.com/RazikaBengana/Go-BnB/internal/handlers"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"net/http"

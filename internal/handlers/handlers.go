@@ -3,9 +3,9 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/RazikaBengana/Go-BnB/pkg/config"
-	"github.com/RazikaBengana/Go-BnB/pkg/models"
-	"github.com/RazikaBengana/Go-BnB/pkg/render"
+	"github.com/RazikaBengana/Go-BnB/internal/config"
+	"github.com/RazikaBengana/Go-BnB/internal/models"
+	"github.com/RazikaBengana/Go-BnB/internal/render"
 	"log"
 	"net/http"
 )

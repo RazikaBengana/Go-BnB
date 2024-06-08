@@ -3,8 +3,8 @@ package render
 import (
 	"bytes"
 	"fmt"
-	"github.com/RazikaBengana/Go-BnB/pkg/config"
-	"github.com/RazikaBengana/Go-BnB/pkg/models"
+	"github.com/RazikaBengana/Go-BnB/internal/config"
+	"github.com/RazikaBengana/Go-BnB/internal/models"
 	"github.com/justinas/nosurf"
 	"html/template"
 	"log"

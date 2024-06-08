@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/RazikaBengana/Go-BnB/pkg/config"
-	"github.com/RazikaBengana/Go-BnB/pkg/handlers"
-	"github.com/RazikaBengana/Go-BnB/pkg/render"
+	"github.com/RazikaBengana/Go-BnB/internal/config"
+	"github.com/RazikaBengana/Go-BnB/internal/handlers"
+	"github.com/RazikaBengana/Go-BnB/internal/render"
 	"github.com/alexedwards/scs/v2"
 	"log"
 	"net/http"
