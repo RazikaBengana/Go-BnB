@@ -55,8 +55,8 @@ func getRoutes() http.Handler {
 	mux := chi.NewRouter()
 
 	mux.Use(middleware.Recoverer) // Add middleware to recover from panics and return a 500 error
-	mux.Use(NoSurf)               // Add CSRF protection middleware to all routes
-	mux.Use(SessionLoad)          // Load and save the session on every request
+	// mux.Use(NoSurf)            // Add CSRF protection middleware to all routes
+	mux.Use(SessionLoad) // Load and save the session on every request
 
 	mux.Get("/", Repo.Home)
 	mux.Get("/about", Repo.About)
