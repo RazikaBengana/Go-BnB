@@ -5,6 +5,7 @@ import (
 	"github.com/RazikaBengana/Go-BnB/internal/config"
 	"github.com/RazikaBengana/Go-BnB/internal/models"
 	"github.com/alexedwards/scs/v2"
+	"log"
 	"net/http"
 	"os"
 	"testing"
@@ -21,6 +22,12 @@ func TestMain(m *testing.M) {
 
 	// Change this to true when in production to enforce secure settings
 	testApp.InProduction = false
+
+	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	testApp.InfoLog = infoLog
+
+	errorLog := log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+	testApp.ErrorLog = errorLog
 
 	// Initialize the session manager with a 24-hour session lifetime
 	session = scs.New()
