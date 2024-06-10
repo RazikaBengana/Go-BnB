@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"github.com/RazikaBengana/Go-BnB/internal/config"
 	"github.com/RazikaBengana/Go-BnB/internal/handlers"
+	"github.com/RazikaBengana/Go-BnB/internal/helpers"
 	"github.com/RazikaBengana/Go-BnB/internal/models"
 	"github.com/RazikaBengana/Go-BnB/internal/render"
 	"github.com/alexedwards/scs/v2"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -17,6 +19,8 @@ const portNumber = ":8080"
 
 var app config.AppConfig
 var session *scs.SessionManager
+var infoLog *log.Logger
+var errorLog *log.Logger
 
 // main is the entry point for the application
 func main() {
@@ -45,6 +49,12 @@ func run() error {
 	// Change this to true when in production to enforce secure settings
 	app.InProduction = false
 
+	infoLog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	app.InfoLog = infoLog
+
+	errorLog = log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+	app.ErrorLog = errorLog
+
 	// Initialize the session manager with a 24-hour session lifetime
 	session = scs.New()
 	session.Lifetime = 24 * time.Hour
@@ -68,6 +78,7 @@ func run() error {
 	repo := handlers.NewRepo(&app)
 	handlers.NewHandlers(repo)
 	render.NewTemplates(&app)
+	helpers.NewHelpers(&app)
 
 	return nil
 }
