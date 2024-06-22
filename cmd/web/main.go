@@ -47,6 +47,9 @@ func main() {
 func run() (*driver.DB, error) {
 	// What I am going to put in the session
 	gob.Register(models.Reservation{})
+	gob.Register(models.User{})
+	gob.Register(models.Room{})
+	gob.Register(models.Restriction{})
 
 	// Change this to true when in production to enforce secure settings
 	app.InProduction = false
