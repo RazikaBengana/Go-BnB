@@ -1,0 +1,15 @@
+# Describe how Soda connects to our database
+development:
+  dialect: postgres
+  database: postgres
+  user:
+  password:
+  host: 127.0.0.1
+  port: 5432
+  pool: 5
+
+test:
+  url: {{envOr "TEST_DATABASE_URL" "postgres://postgres:postgres@127.0.0.1:5432/myapp_test"}}
+
+production:
+  url: {{envOr "DATABASE_URL" "postgres://postgres:postgres@127.0.0.1:5432/myapp_production"}}
