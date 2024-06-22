@@ -4,6 +4,7 @@ import (
 	"encoding/gob"
 	"fmt"
 	"github.com/RazikaBengana/Go-BnB/internal/config"
+	"github.com/RazikaBengana/Go-BnB/internal/driver"
 	"github.com/RazikaBengana/Go-BnB/internal/handlers"
 	"github.com/RazikaBengana/Go-BnB/internal/helpers"
 	"github.com/RazikaBengana/Go-BnB/internal/models"
@@ -24,11 +25,12 @@ var errorLog *log.Logger
 
 // main is the entry point for the application
 func main() {
-	err := run()
+	db, err := run()
 
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer db.SQL.Close()
 
 	fmt.Println(fmt.Sprintf("Starting application on port %s", portNumber))
 
@@ -42,7 +44,7 @@ func main() {
 }
 
 // run initializes the application configuration and dependencies
-func run() error {
+func run() (*driver.DB, error) {
 	// What I am going to put in the session
 	gob.Register(models.Reservation{})
 
@@ -65,20 +67,28 @@ func run() error {
 	// Store the session manager in the app config
 	app.Session = session
 
+	// Connect to database
+	log.Println("Connecting to database...")
+	db, err := driver.ConnectSQL("host=localhost port=5432 dbname=bookings user= password=")
+	if err != nil {
+		log.Fatal("Cannot connect to database ! Dying...")
+	}
+	log.Println("Connected to database!")
+
 	// Create a template cache for rendering HTML templates
 	tc, err := render.CreateTemplateCache()
 	if err != nil {
 		log.Fatal("cannot create template cache")
-		return err
+		return nil, err
 	}
 
 	app.TemplateCache = tc
 	app.UseCache = false
 
-	repo := handlers.NewRepo(&app)
+	repo := handlers.NewRepo(&app, db)
 	handlers.NewHandlers(repo)
 	render.NewTemplates(&app)
 	helpers.NewHelpers(&app)
 
-	return nil
+	return db, nil
 }

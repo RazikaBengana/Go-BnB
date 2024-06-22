@@ -4,10 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/RazikaBengana/Go-BnB/internal/config"
+	"github.com/RazikaBengana/Go-BnB/internal/driver"
 	"github.com/RazikaBengana/Go-BnB/internal/forms"
 	"github.com/RazikaBengana/Go-BnB/internal/helpers"
 	"github.com/RazikaBengana/Go-BnB/internal/models"
 	"github.com/RazikaBengana/Go-BnB/internal/render"
+	"github.com/RazikaBengana/Go-BnB/internal/repository"
+	"github.com/RazikaBengana/Go-BnB/internal/repository/dbrepo"
 	"net/http"
 )
 
@@ -17,12 +20,14 @@ var Repo *Repository
 // Repository is the repository type that holds the application configuration
 type Repository struct {
 	App *config.AppConfig
+	DB  repository.DatabaseRepo
 }
 
 // NewRepo creates a new repository with the given application configuration
-func NewRepo(a *config.AppConfig) *Repository {
+func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
 	return &Repository{
 		App: a,
+		DB:  dbrepo.NewPostgresRepo(db.SQL, a),
 	}
 }
 
