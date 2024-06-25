@@ -47,6 +47,12 @@ func TestMain(m *testing.M) {
 	// Store the session manager in the app config
 	app.Session = session
 
+	mailChan := make(chan models.MailData)
+	app.MailChan = mailChan
+	defer close(mailChan)
+
+	listenForMail()
+
 	// Create a template cache for rendering HTML templates
 	tc, err := CreateTestTemplateCache()
 	if err != nil {
@@ -61,6 +67,14 @@ func TestMain(m *testing.M) {
 	render.NewRenderer(&app)
 
 	os.Exit(m.Run())
+}
+
+func listenForMail() {
+	go func() {
+		for {
+			_ = <-app.MailChan
+		}
+	}()
 }
 
 func getRoutes() http.Handler {
