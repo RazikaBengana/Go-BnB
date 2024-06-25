@@ -47,7 +47,7 @@ function Prompt() {
         } = c;
 
         Swal.fire({
-            icon: "error",
+            icon: 'error',
             title: title,
             text: msg,
             footer: footer,
@@ -95,7 +95,7 @@ function Prompt() {
             if (result.dismiss !== Swal.DismissReason.cancel) {
                 if (result.value !== "") {
                     if (c.callback !== undefined) {
-                        c.callback(result)
+                        c.callback(result);
                     }
                 } else {
                     c.callback(false);
